@@ -1,33 +1,34 @@
 // import React from 'react'
 
 
-import axios from "axios"
+import axios, { AxiosResponse } from "axios"
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import { PostType } from "../types/PostType"
 
 
 const OnePost = () => {
   const [data, setData] = useState<any>([])
   const navigate = useNavigate()
   const item = useParams()
-  console.log(item)
+
 
   async function fetchOnePost() {
-    await axios.get(`https://jsonplaceholder.typicode.com/posts?id=${item.id}`)
+    await axios.get<any, AxiosResponse<any, any>, any>(`https://jsonplaceholder.typicode.com/posts?id=${item.id}`)
       .then((res) => setData(res.data))
-
+      .catch(err => console.log(err))
     // return data
   }
   useEffect(() => {
     fetchOnePost()
-  }, [])
-  console.log(data)
+  }, [item])
+
   return (
     <div className="one_container">
 
 
-      {data.map((el: any) => (
-        <div className="onepost">
+      {data.map((el: PostType) => (
+        <div className="onepost" key={el.id}>
           <h3>Id</h3>
           <h1>{el.id}</h1>
           <hr />

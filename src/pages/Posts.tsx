@@ -1,22 +1,39 @@
 
 
-import { fetchPosts } from '../services/fetchPosts';
+// import { fetchPosts } from '../services/fetchPosts';
 import CardPost from '../components/CardPost';
 
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import axios, { AxiosResponse } from 'axios';
+
+
 
 
 const Posts = () => {
+  const { data, fetchNextPage } = useInfiniteQuery(
+    {
+      queryKey: ['posts'],
+      queryFn: async ({ pageParam }: any) => {
+        const data = await axios.get<any, AxiosResponse<any, any>, any>(`https://jsonplaceholder.typicode.com/posts?_page=${pageParam}&_limit=5`)
 
-  const query = useQuery({ queryKey: ['posts'], queryFn: fetchPosts })
-
+        return await data.data
+      },
+      initialPageParam: 1,
+      getNextPageParam: (_lastPage, _allPages, lastPageParam) => {
+        return lastPageParam + 1;
+      }
+    })
   return (
     <div className='post_container'>
       <h1>Posts</h1>
-      {query.data?.map((elem: { id: number; title: string; body: string; }) => (
-        <CardPost id={elem.id} title={elem.title} body={elem.body} />
-      ))}
 
+      {data?.pages?.map((page: any) =>
+        page.map((elem: { id: number; title: string; body: string; }) => {
+          return <CardPost id={elem.id} title={elem.title} body={elem.body} key={elem.id} />
+        }
+
+        ))}
+      <button className='button' onClick={() => fetchNextPage()}>next</button>
     </div>
   )
 }

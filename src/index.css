@@ -80,3 +80,19 @@ hr {
   transition: 0.5s;
   background: green;
 }
+
+.button {
+  width: 30%;
+  background: red;
+  color: white;
+  margin: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 10px;
+  border: 3px solid black;
+}
+
+.button:hover {
+  background: orange;
+}
