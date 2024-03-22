@@ -63,15 +63,19 @@ hr {
   margin: 20px;
 }
 
+h3 {
+  margin: 10px;
+}
+
 .btn {
-  width: 50%;
+  width: 30%;
   padding: 10px;
   background: blue;
   color: white;
   border-radius: 10px;
   transition: 0.5s;
   cursor: pointer;
-  margin: 10px;
+  margin: 20px;
   border: none;
 }
 
@@ -82,7 +86,7 @@ hr {
 }
 
 .button {
-  width: 30%;
+  width: 50%;
   background: red;
   color: white;
   margin: 10px;
